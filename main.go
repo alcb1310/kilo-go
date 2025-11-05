@@ -5,9 +5,13 @@ import (
 	"fmt"
 	"io"
 	"os"
+
+	"github.com/alcb1310/kilo-go/linux"
 )
 
 func main() {
+	linux.EnableRawMode()
+
 	r := bufio.NewReader(os.Stdin)
 
 	for {

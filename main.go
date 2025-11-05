@@ -10,7 +10,12 @@ import (
 )
 
 func main() {
-	linux.EnableRawMode()
+	restoreFunc, err := linux.EnableRawMode()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error: %s\n", err)
+		os.Exit(1)
+	}
+	defer restoreFunc()
 
 	r := bufio.NewReader(os.Stdin)
 

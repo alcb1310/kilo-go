@@ -28,6 +28,12 @@ func main() {
 			os.Exit(1)
 		}
 
+		if b <= 0x1f || b == 0x7f { // This will make sure we've passed a control-key combo
+			fmt.Fprintf(os.Stdout, "%d\n", b)
+		} else {
+			fmt.Fprintf(os.Stdout, "%d (%c)\n", b, b)
+		}
+
 		if b == 'q' {
 			break
 		}

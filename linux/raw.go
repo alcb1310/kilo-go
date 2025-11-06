@@ -17,6 +17,7 @@ func EnableRawMode() (func(), error) {
 
 	termios.Lflag &^= unix.ECHO | unix.ICANON | unix.IEXTEN | unix.ISIG
 	termios.Iflag &^= unix.ICRNL | unix.IXON
+	termios.Oflag &^= unix.OPOST
 
 	if err = unix.IoctlSetTermios(unix.Stdin, unix.TCSETS, termios); err != nil {
 		return nil, fmt.Errorf("EnableRawMode: error setting terminal flags: %w", err)
@@ -24,7 +25,7 @@ func EnableRawMode() (func(), error) {
 
 	return func() {
 		if err = unix.IoctlSetTermios(unix.Stdin, unix.TCSETS, &original); err != nil {
-			fmt.Fprintf(os.Stderr, "EnableRawMode: error restoring terminal flags: %s\n", err)
+			fmt.Fprintf(os.Stderr, "EnableRawMode: error restoring terminal flags: %s\r\n", err)
 			os.Exit(1)
 		}
 	}, nil

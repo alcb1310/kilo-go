@@ -7,7 +7,13 @@ import (
 	"golang.org/x/sys/unix"
 )
 
-func EnableRawMode() (func(), error) {
+type UnixRawMode struct{}
+
+func NewUnixRawMode() *UnixRawMode {
+	return &UnixRawMode{}
+}
+
+func (r *UnixRawMode) EnableRawMode() (func(), error) {
 	termios, err := unix.IoctlGetTermios(unix.Stdin, unix.TCGETS)
 	if err != nil {
 		return nil, fmt.Errorf("EnableRawMode: error getting terminal flags: %w", err)

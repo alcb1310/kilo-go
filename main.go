@@ -9,13 +9,28 @@ import (
 	"github.com/alcb1310/kilo-go/linux"
 )
 
-func main() {
-	restoreFunc, err := linux.EnableRawMode()
+type RawMode interface {
+	EnableRawMode() (func(), error)
+}
+
+type EditorConfig struct {
+	restoreFunc func()
+}
+
+var editorState EditorConfig = EditorConfig{}
+
+func init() {
+	var err error
+	u := linux.NewUnixRawMode()
+	editorState.restoreFunc, err = u.EnableRawMode()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error: %s\r\n", err)
 		os.Exit(1)
 	}
-	defer restoreFunc()
+}
+
+func main() {
+	defer editorState.restoreFunc()
 
 	r := bufio.NewReader(os.Stdin)
 

@@ -2,8 +2,8 @@ package linux
 
 import (
 	"fmt"
-	"os"
 
+	"github.com/alcb1310/kilo-go/exit"
 	"golang.org/x/sys/unix"
 )
 
@@ -32,8 +32,7 @@ func (r *UnixRawMode) EnableRawMode() (func(), error) {
 
 	return func() {
 		if err = unix.IoctlSetTermios(unix.Stdin, unix.TCSETS, &original); err != nil {
-			fmt.Fprintf(os.Stderr, "EnableRawMode: error restoring terminal flags: %s\r\n", err)
-			os.Exit(1)
+			exit.SafeExit(nil, fmt.Errorf("EnableRawMode: error restoring terminal flags: %w", err))
 		}
 	}, nil
 }

@@ -49,7 +49,7 @@ func main() {
 			fmt.Fprintf(os.Stdout, "%d (%c)\r\n", b, b)
 		}
 
-		if b == 'q' {
+		if b == utils.CtrlKey('q') {
 			break
 		}
 	}

@@ -6,6 +6,7 @@ import (
 	"io"
 	"os"
 
+	"github.com/alcb1310/kilo-go/exit"
 	"github.com/alcb1310/kilo-go/linux"
 )
 
@@ -30,7 +31,7 @@ func init() {
 }
 
 func main() {
-	defer editorState.restoreFunc()
+	defer exit.SafeExit(editorState.restoreFunc, nil)
 
 	r := bufio.NewReader(os.Stdin)
 
@@ -39,8 +40,7 @@ func main() {
 		if err == io.EOF {
 			break
 		} else if err != nil {
-			fmt.Fprintf(os.Stderr, "Error: reading key from Stdin: %s\r\n", err)
-			os.Exit(1)
+			exit.SafeExit(editorState.restoreFunc, err)
 		}
 
 		if b <= 0x1f || b == 0x7f { // This will make sure we've passed a control-key combo

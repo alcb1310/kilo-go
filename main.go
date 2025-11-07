@@ -6,8 +6,8 @@ import (
 	"io"
 	"os"
 
-	"github.com/alcb1310/kilo-go/exit"
 	"github.com/alcb1310/kilo-go/linux"
+	"github.com/alcb1310/kilo-go/utils"
 )
 
 type RawMode interface {
@@ -31,7 +31,7 @@ func init() {
 }
 
 func main() {
-	defer exit.SafeExit(editorState.restoreFunc, nil)
+	defer utils.SafeExit(editorState.restoreFunc, nil)
 
 	r := bufio.NewReader(os.Stdin)
 
@@ -40,7 +40,7 @@ func main() {
 		if err == io.EOF {
 			break
 		} else if err != nil {
-			exit.SafeExit(editorState.restoreFunc, err)
+			utils.SafeExit(editorState.restoreFunc, err)
 		}
 
 		if b <= 0x1f || b == 0x7f { // This will make sure we've passed a control-key combo

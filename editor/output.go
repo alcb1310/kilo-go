@@ -3,12 +3,11 @@ package editor
 import (
 	"fmt"
 	"os"
-)
 
-const (
-	ESC = 0x1b
+	"github.com/alcb1310/kilo-go/utils"
 )
 
 func (e *EditorConfig) editorRefreshScreen() {
-	fmt.Fprintf(os.Stdout, "%c[2J", ESC)
+	fmt.Fprintf(os.Stdout, "%c[2J", utils.ESC)
+	fmt.Fprintf(os.Stdout, "%c[H", utils.ESC)
 }

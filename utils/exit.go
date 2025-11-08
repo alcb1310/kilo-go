@@ -13,6 +13,9 @@ import (
 // @param f - The function to call
 // @param err - The error to exit with
 func SafeExit(f func(), err error) {
+	fmt.Fprintf(os.Stdout, "%c[2J", ESC)
+	fmt.Fprintf(os.Stdout, "%c[H", ESC)
+
 	if f != nil {
 		f()
 	}

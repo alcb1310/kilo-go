@@ -23,6 +23,7 @@ func (e *EditorConfig) EditorLoop() {
 	defer utils.SafeExit(e.restoreFunc, nil)
 
 	for {
+		e.editorRefreshScreen()
 		e.editorProcessKeypress()
 	}
 }

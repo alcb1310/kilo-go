@@ -12,7 +12,6 @@ func (e *EditorConfig) editorRefreshScreen() {
 	abuf := ab.New()
 
 	fmt.Fprintf(abuf, "%c[?25l", utils.ESC)
-	fmt.Fprintf(abuf, "%c[2J", utils.ESC)
 	fmt.Fprintf(abuf, "%c[H", utils.ESC)
 
 	e.editorDrawRows(abuf)
@@ -27,6 +26,7 @@ func (e *EditorConfig) editorDrawRows(abuf *ab.AppendBuffer) {
 	for y := range e.rows {
 		fmt.Fprintf(abuf, "~")
 
+		fmt.Fprintf(abuf, "%c[K", utils.ESC)
 		if y < e.rows-1 {
 			fmt.Fprintf(abuf, "\r\n")
 		}

@@ -11,6 +11,7 @@ type EditorConfig struct {
 	restoreFunc func()
 	reader      *bufio.Reader
 	rows, cols  int
+	cx, cy      int
 }
 
 func NewEditor(f func()) *EditorConfig {
@@ -24,6 +25,8 @@ func NewEditor(f func()) *EditorConfig {
 		reader:      bufio.NewReader(os.Stdin),
 		rows:        rows,
 		cols:        cols,
+		cx:          0,
+		cy:          0,
 	}
 }
 

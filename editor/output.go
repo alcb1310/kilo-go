@@ -15,8 +15,7 @@ func (e *EditorConfig) editorRefreshScreen() {
 	fmt.Fprintf(abuf, "%c[H", utils.ESC)
 
 	e.editorDrawRows(abuf)
-
-	fmt.Fprintf(abuf, "%c[H", utils.ESC)
+	fmt.Fprintf(abuf, "%c[%d;%dH", utils.ESC, e.cy+1, e.cx+1)
 	fmt.Fprintf(abuf, "%c[?25h", utils.ESC)
 
 	fmt.Fprintf(os.Stdout, "%s", abuf.Bytes())
@@ -26,10 +25,7 @@ func (e *EditorConfig) editorDrawRows(abuf *ab.AppendBuffer) {
 	for y := range e.rows {
 		if y == e.rows/3 {
 			welcomeMessage := fmt.Sprintf("Kilo editor -- version %s", utils.KILO_VERSION)
-			welcomeLen := len(welcomeMessage)
-			if welcomeLen > e.cols {
-				welcomeLen = e.cols
-			}
+			welcomeLen := min(len(welcomeMessage), e.cols)
 
 			padding := (e.cols - welcomeLen) / 2
 			if padding > 0 {

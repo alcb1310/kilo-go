@@ -22,13 +22,13 @@ func (e *EditorConfig) editorReadKey() (byte, error) {
 		if seq[0] == '[' {
 			switch seq[1] {
 			case 'A':
-				return 'k', nil
+				return utils.ARROW_UP, nil
 			case 'B':
-				return 'j', nil
+				return utils.ARROW_DOWN, nil
 			case 'C':
-				return 'l', nil
+				return utils.ARROW_RIGHT, nil
 			case 'D':
-				return 'h', nil
+				return utils.ARROW_LEFT, nil
 			}
 		}
 

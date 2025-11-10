@@ -8,7 +8,7 @@ func (e *EditorConfig) editorReadKey() (int, error) {
 	b, err := e.reader.ReadByte()
 
 	if b == utils.ESC {
-		seq := make([]byte, 2)
+		seq := make([]byte, 3)
 
 		seq[0], err = e.reader.ReadByte()
 		if err != nil {
@@ -20,15 +20,31 @@ func (e *EditorConfig) editorReadKey() (int, error) {
 		}
 
 		if seq[0] == '[' {
-			switch seq[1] {
-			case 'A':
-				return utils.ARROW_UP, nil
-			case 'B':
-				return utils.ARROW_DOWN, nil
-			case 'C':
-				return utils.ARROW_RIGHT, nil
-			case 'D':
-				return utils.ARROW_LEFT, nil
+			if seq[1] >= '0' && seq[1] <= '9' {
+				seq[2], err = e.reader.ReadByte()
+				if err != nil {
+					return utils.ESC, nil
+				}
+
+				if seq[2] == '~' {
+					switch seq[1] {
+					case '5':
+						return utils.PAGE_UP, nil
+					case '6':
+						return utils.PAGE_DOWN, nil
+					}
+				}
+			} else {
+				switch seq[1] {
+				case 'A':
+					return utils.ARROW_UP, nil
+				case 'B':
+					return utils.ARROW_DOWN, nil
+				case 'C':
+					return utils.ARROW_RIGHT, nil
+				case 'D':
+					return utils.ARROW_LEFT, nil
+				}
 			}
 		}
 

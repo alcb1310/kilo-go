@@ -13,6 +13,15 @@ func (e *EditorConfig) editorProcessKeypress() {
 		utils.SafeExit(e.restoreFunc, nil)
 	case utils.ARROW_DOWN, utils.ARROW_LEFT, utils.ARROW_RIGHT, utils.ARROW_UP:
 		e.editorMoveCursor(b)
+	case utils.PAGE_DOWN, utils.PAGE_UP:
+		times := e.rows
+		for range times {
+			if b == utils.PAGE_DOWN {
+				e.editorMoveCursor(utils.ARROW_DOWN)
+			} else {
+				e.editorMoveCursor(utils.ARROW_UP)
+			}
+		}
 	}
 }
 

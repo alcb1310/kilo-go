@@ -28,10 +28,18 @@ func (e *EditorConfig) editorReadKey() (int, error) {
 
 				if seq[2] == '~' {
 					switch seq[1] {
+					case '1':
+						return utils.HOME_KEY, nil
+					case '4':
+						return utils.END_KEY, nil
 					case '5':
 						return utils.PAGE_UP, nil
 					case '6':
 						return utils.PAGE_DOWN, nil
+					case '7':
+						return utils.HOME_KEY, nil
+					case '8':
+						return utils.END_KEY, nil
 					}
 				}
 			} else {
@@ -44,7 +52,18 @@ func (e *EditorConfig) editorReadKey() (int, error) {
 					return utils.ARROW_RIGHT, nil
 				case 'D':
 					return utils.ARROW_LEFT, nil
+				case 'H':
+					return utils.HOME_KEY, nil
+				case 'F':
+					return utils.END_KEY, nil
 				}
+			}
+		} else if seq[0] == 'O' {
+			switch seq[1] {
+			case 'H':
+				return utils.HOME_KEY, nil
+			case 'F':
+				return utils.END_KEY, nil
 			}
 		}
 

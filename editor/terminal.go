@@ -4,7 +4,7 @@ import (
 	"github.com/alcb1310/kilo-go/utils"
 )
 
-func (e *EditorConfig) editorReadKey() (byte, error) {
+func (e *EditorConfig) editorReadKey() (int, error) {
 	b, err := e.reader.ReadByte()
 
 	if b == utils.ESC {
@@ -35,5 +35,5 @@ func (e *EditorConfig) editorReadKey() (byte, error) {
 		return utils.ESC, nil
 	}
 
-	return b, err
+	return int(b), err
 }

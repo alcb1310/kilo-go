@@ -19,12 +19,20 @@ func (e *EditorConfig) editorProcessKeypress() {
 func (e *EditorConfig) editorMoveCursor(key int) {
 	switch key {
 	case utils.ARROW_LEFT:
-		e.cx--
+		if e.cx != 0 {
+			e.cx--
+		}
 	case utils.ARROW_DOWN:
-		e.cy++
+		if e.cy != e.rows-1 {
+			e.cy++
+		}
 	case utils.ARROW_UP:
-		e.cy--
+		if e.cy != 0 {
+			e.cy--
+		}
 	case utils.ARROW_RIGHT:
-		e.cx++
+		if e.cx != e.cols-1 {
+			e.cx++
+		}
 	}
 }

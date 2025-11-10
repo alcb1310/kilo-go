@@ -11,20 +11,20 @@ func (e *EditorConfig) editorProcessKeypress() {
 	switch b {
 	case utils.CtrlKey('q'):
 		utils.SafeExit(e.restoreFunc, nil)
-	case 'h', 'j', 'k', 'l':
+	case utils.ARROW_DOWN, utils.ARROW_LEFT, utils.ARROW_RIGHT, utils.ARROW_UP:
 		e.editorMoveCursor(b)
 	}
 }
 
 func (e *EditorConfig) editorMoveCursor(key byte) {
 	switch key {
-	case 'h':
+	case utils.ARROW_LEFT:
 		e.cx--
-	case 'j':
+	case utils.ARROW_DOWN:
 		e.cy++
-	case 'k':
+	case utils.ARROW_UP:
 		e.cy--
-	case 'l':
+	case utils.ARROW_RIGHT:
 		e.cx++
 	}
 }

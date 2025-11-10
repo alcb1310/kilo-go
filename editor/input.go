@@ -22,6 +22,10 @@ func (e *EditorConfig) editorProcessKeypress() {
 				e.editorMoveCursor(utils.ARROW_UP)
 			}
 		}
+	case utils.HOME_KEY:
+		e.cx = 0
+	case utils.END_KEY:
+		e.cx = e.cols - 1
 	}
 }
 

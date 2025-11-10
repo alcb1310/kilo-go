@@ -7,8 +7,8 @@ const (
 )
 
 const (
-	ARROW_UP    = 'k'
-	ARROW_DOWN  = 'j'
-	ARROW_LEFT  = 'h'
-	ARROW_RIGHT = 'l'
+	ARROW_UP = iota + 1000
+	ARROW_DOWN
+	ARROW_LEFT
+	ARROW_RIGHT
 )

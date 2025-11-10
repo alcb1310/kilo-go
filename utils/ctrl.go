@@ -1,5 +1,5 @@
 package utils
 
-func CtrlKey(key byte) byte {
-	return key & 0x1f
+func CtrlKey(key byte) int {
+	return int(key & 0x1f)
 }

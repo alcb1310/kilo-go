@@ -16,7 +16,7 @@ func (e *EditorConfig) editorProcessKeypress() {
 	}
 }
 
-func (e *EditorConfig) editorMoveCursor(key byte) {
+func (e *EditorConfig) editorMoveCursor(key int) {
 	switch key {
 	case utils.ARROW_LEFT:
 		e.cx--

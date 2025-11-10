@@ -19,7 +19,8 @@ func (e *EditorConfig) editorReadKey() (int, error) {
 			return utils.ESC, nil
 		}
 
-		if seq[0] == '[' {
+		switch seq[0] {
+		case '[':
 			if seq[1] >= '0' && seq[1] <= '9' {
 				seq[2], err = e.reader.ReadByte()
 				if err != nil {
@@ -30,6 +31,8 @@ func (e *EditorConfig) editorReadKey() (int, error) {
 					switch seq[1] {
 					case '1':
 						return utils.HOME_KEY, nil
+					case '3':
+						return utils.DEL_KEY, nil
 					case '4':
 						return utils.END_KEY, nil
 					case '5':
@@ -58,7 +61,7 @@ func (e *EditorConfig) editorReadKey() (int, error) {
 					return utils.END_KEY, nil
 				}
 			}
-		} else if seq[0] == 'O' {
+		case 'O':
 			switch seq[1] {
 			case 'H':
 				return utils.HOME_KEY, nil

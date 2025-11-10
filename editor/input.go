@@ -1,6 +1,10 @@
 package editor
 
-import "github.com/alcb1310/kilo-go/utils"
+import (
+	"log/slog"
+
+	"github.com/alcb1310/kilo-go/utils"
+)
 
 func (e *EditorConfig) editorProcessKeypress() {
 	b, err := e.editorReadKey()
@@ -22,6 +26,8 @@ func (e *EditorConfig) editorProcessKeypress() {
 				e.editorMoveCursor(utils.ARROW_UP)
 			}
 		}
+	case utils.DEL_KEY:
+		slog.Info("DEL_KEY")
 	case utils.HOME_KEY:
 		e.cx = 0
 	case utils.END_KEY:

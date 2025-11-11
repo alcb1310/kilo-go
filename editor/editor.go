@@ -18,6 +18,7 @@ type EditorConfig struct {
 	screencols  int
 	cx, cy      int
 	numrows     int
+	rowoffset   int
 	rows        []EditorRow
 }
 
@@ -35,6 +36,7 @@ func NewEditor(f func()) *EditorConfig {
 		cx:          0,
 		cy:          0,
 		numrows:     0,
+		rowoffset:   0,
 		rows:        make([]EditorRow, 0),
 	}
 }

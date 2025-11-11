@@ -9,13 +9,14 @@ import (
 )
 
 func (e *EditorConfig) editorRefreshScreen() {
+	e.editorScroll()
 	abuf := ab.New()
 
 	fmt.Fprintf(abuf, "%c[?25l", utils.ESC)
 	fmt.Fprintf(abuf, "%c[H", utils.ESC)
 
 	e.editorDrawRows(abuf)
-	fmt.Fprintf(abuf, "%c[%d;%dH", utils.ESC, e.cy+1, e.cx+1)
+	fmt.Fprintf(abuf, "%c[%d;%dH", utils.ESC, (e.cy-e.rowoffset)+1, e.cx+1)
 	fmt.Fprintf(abuf, "%c[?25h", utils.ESC)
 
 	fmt.Fprintf(os.Stdout, "%s", abuf.Bytes())
@@ -23,7 +24,9 @@ func (e *EditorConfig) editorRefreshScreen() {
 
 func (e *EditorConfig) editorDrawRows(abuf *ab.AppendBuffer) {
 	for y := range e.screenrows {
-		if y >= e.numrows {
+		filerow := y + e.rowoffset
+		fmt.Fprintf(abuf, "%c[K", utils.ESC)
+		if filerow >= e.numrows {
 			if e.numrows == 0 && y == e.screenrows/3 {
 				welcomeMessage := fmt.Sprintf("Kilo editor -- version %s", utils.KILO_VERSION)
 				welcomeLen := min(len(welcomeMessage), e.screencols)
@@ -43,12 +46,20 @@ func (e *EditorConfig) editorDrawRows(abuf *ab.AppendBuffer) {
 				fmt.Fprintf(abuf, "~")
 			}
 		} else {
-			fmt.Fprintf(abuf, "%s", e.rows[y].chars)
+			fmt.Fprintf(abuf, "%s", e.rows[filerow].chars)
 		}
 
-		fmt.Fprintf(abuf, "%c[K", utils.ESC)
 		if y < e.screenrows-1 {
 			fmt.Fprintf(abuf, "\r\n")
 		}
+	}
+}
+
+func (e *EditorConfig) editorScroll() {
+	if e.cy < e.rowoffset {
+		e.rowoffset = e.cy
+	}
+	if e.cy >= e.rowoffset+e.screenrows {
+		e.rowoffset = e.cy - e.screenrows + 1
 	}
 }

@@ -38,11 +38,11 @@ func (e *EditorConfig) editorProcessKeypress() {
 func (e *EditorConfig) editorMoveCursor(key int) {
 	switch key {
 	case utils.ARROW_LEFT:
-		if e.cx != 0 {
+		if e.cx > 0 {
 			e.cx--
 		}
 	case utils.ARROW_DOWN:
-		if e.cy != e.screenrows-1 {
+		if e.cy < e.numrows {
 			e.cy++
 		}
 	case utils.ARROW_UP:

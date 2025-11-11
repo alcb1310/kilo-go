@@ -18,7 +18,7 @@ func (e *EditorConfig) editorProcessKeypress() {
 	case utils.ARROW_DOWN, utils.ARROW_LEFT, utils.ARROW_RIGHT, utils.ARROW_UP:
 		e.editorMoveCursor(b)
 	case utils.PAGE_DOWN, utils.PAGE_UP:
-		times := e.rows
+		times := e.screenrows
 		for range times {
 			if b == utils.PAGE_DOWN {
 				e.editorMoveCursor(utils.ARROW_DOWN)
@@ -31,7 +31,7 @@ func (e *EditorConfig) editorProcessKeypress() {
 	case utils.HOME_KEY:
 		e.cx = 0
 	case utils.END_KEY:
-		e.cx = e.cols - 1
+		e.cx = e.screencols - 1
 	}
 }
 
@@ -42,7 +42,7 @@ func (e *EditorConfig) editorMoveCursor(key int) {
 			e.cx--
 		}
 	case utils.ARROW_DOWN:
-		if e.cy != e.rows-1 {
+		if e.cy != e.screenrows-1 {
 			e.cy++
 		}
 	case utils.ARROW_UP:
@@ -50,7 +50,7 @@ func (e *EditorConfig) editorMoveCursor(key int) {
 			e.cy--
 		}
 	case utils.ARROW_RIGHT:
-		if e.cx != e.cols-1 {
+		if e.cx != e.screencols-1 {
 			e.cx++
 		}
 	}

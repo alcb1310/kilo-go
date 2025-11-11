@@ -24,7 +24,7 @@ func (e *EditorConfig) editorRefreshScreen() {
 func (e *EditorConfig) editorDrawRows(abuf *ab.AppendBuffer) {
 	for y := range e.rows {
 		if y >= e.numrows {
-			if y == e.rows/3 {
+			if e.numrows == 0 && y == e.rows/3 {
 				welcomeMessage := fmt.Sprintf("Kilo editor -- version %s", utils.KILO_VERSION)
 				welcomeLen := min(len(welcomeMessage), e.cols)
 

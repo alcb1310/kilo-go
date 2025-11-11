@@ -19,9 +19,11 @@ func (e *EditorConfig) editorOpen(filename string) {
 
 	scanner := bufio.NewScanner(file)
 
-	scanner.Scan()
-	e.row.chars = scanner.Text()
-	e.numrows = 1
+	for scanner.Scan() {
+		row := EditorRow{chars: scanner.Text()}
+		e.rows = append(e.rows, row)
+		e.numrows++
+	}
 
 	if err := scanner.Err(); err != nil {
 		fmt.Fprintf(os.Stderr, "editorOpen, error scanning file: %v\r\n", err)

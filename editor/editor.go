@@ -2,6 +2,7 @@ package editor
 
 import (
 	"bufio"
+	"log/slog"
 	"os"
 
 	"github.com/alcb1310/kilo-go/utils"
@@ -39,7 +40,11 @@ func NewEditor(f func()) *EditorConfig {
 
 func (e *EditorConfig) EditorLoop() {
 	defer utils.SafeExit(e.restoreFunc, nil)
-	e.editorOpen()
+
+	if len(os.Args) > 1 {
+		slog.Info("Opening file", "file", os.Args[1])
+		e.editorOpen()
+	}
 
 	for {
 		e.editorRefreshScreen()

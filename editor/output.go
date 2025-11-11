@@ -43,7 +43,7 @@ func (e *EditorConfig) editorDrawRows(abuf *ab.AppendBuffer) {
 				fmt.Fprintf(abuf, "~")
 			}
 		} else {
-			fmt.Fprintf(abuf, "%s", e.row.chars)
+			fmt.Fprintf(abuf, "%s", e.rows[y].chars)
 		}
 
 		fmt.Fprintf(abuf, "%c[K", utils.ESC)

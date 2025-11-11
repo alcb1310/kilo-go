@@ -18,7 +18,7 @@ type EditorConfig struct {
 	screencols  int
 	cx, cy      int
 	numrows     int
-	row         EditorRow
+	rows        []EditorRow
 }
 
 func NewEditor(f func()) *EditorConfig {
@@ -35,6 +35,7 @@ func NewEditor(f func()) *EditorConfig {
 		cx:          0,
 		cy:          0,
 		numrows:     0,
+		rows:        make([]EditorRow, 0),
 	}
 }
 

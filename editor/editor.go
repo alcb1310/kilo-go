@@ -7,11 +7,17 @@ import (
 	"github.com/alcb1310/kilo-go/utils"
 )
 
+type EditorRow struct {
+	chars string
+}
+
 type EditorConfig struct {
 	restoreFunc func()
 	reader      *bufio.Reader
 	rows, cols  int
 	cx, cy      int
+	numrows     int
+	row         EditorRow
 }
 
 func NewEditor(f func()) *EditorConfig {
@@ -27,11 +33,13 @@ func NewEditor(f func()) *EditorConfig {
 		cols:        cols,
 		cx:          0,
 		cy:          0,
+		numrows:     0,
 	}
 }
 
 func (e *EditorConfig) EditorLoop() {
 	defer utils.SafeExit(e.restoreFunc, nil)
+	e.editorOpen()
 
 	for {
 		e.editorRefreshScreen()

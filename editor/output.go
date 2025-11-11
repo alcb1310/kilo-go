@@ -23,23 +23,27 @@ func (e *EditorConfig) editorRefreshScreen() {
 
 func (e *EditorConfig) editorDrawRows(abuf *ab.AppendBuffer) {
 	for y := range e.rows {
-		if y == e.rows/3 {
-			welcomeMessage := fmt.Sprintf("Kilo editor -- version %s", utils.KILO_VERSION)
-			welcomeLen := min(len(welcomeMessage), e.cols)
+		if y >= e.numrows {
+			if y == e.rows/3 {
+				welcomeMessage := fmt.Sprintf("Kilo editor -- version %s", utils.KILO_VERSION)
+				welcomeLen := min(len(welcomeMessage), e.cols)
 
-			padding := (e.cols - welcomeLen) / 2
-			if padding > 0 {
+				padding := (e.cols - welcomeLen) / 2
+				if padding > 0 {
+					fmt.Fprintf(abuf, "~")
+					padding--
+				}
+
+				for range padding {
+					fmt.Fprintf(abuf, " ")
+				}
+
+				fmt.Fprintf(abuf, "%s", welcomeMessage)
+			} else {
 				fmt.Fprintf(abuf, "~")
-				padding--
 			}
-
-			for range padding {
-				fmt.Fprintf(abuf, " ")
-			}
-
-			fmt.Fprintf(abuf, "%s", welcomeMessage)
 		} else {
-			fmt.Fprintf(abuf, "~")
+			fmt.Fprintf(abuf, "%s", e.row.chars)
 		}
 
 		fmt.Fprintf(abuf, "%c[K", utils.ESC)

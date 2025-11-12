@@ -36,6 +36,11 @@ func (e *EditorConfig) editorProcessKeypress() {
 }
 
 func (e *EditorConfig) editorMoveCursor(key int) {
+	var row *EditorRow = nil
+	if e.cy < e.numrows {
+		row = &e.rows[e.cy]
+	}
+
 	switch key {
 	case utils.ARROW_LEFT:
 		if e.cx > 0 {
@@ -50,6 +55,8 @@ func (e *EditorConfig) editorMoveCursor(key int) {
 			e.cy--
 		}
 	case utils.ARROW_RIGHT:
-		e.cx++
+		if row != nil && e.cx < len(row.chars) {
+			e.cx++
+		}
 	}
 }

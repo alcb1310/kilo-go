@@ -4,6 +4,8 @@ const (
 	ESC = 0x1b
 
 	KILO_VERSION = "0.0.1"
+
+	KILO_TAB_STOP = 8
 )
 
 const (

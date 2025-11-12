@@ -1,5 +1,7 @@
 package editor
 
+import "github.com/alcb1310/kilo-go/utils"
+
 func (e *EditorConfig) editorAppendRow(s string) {
 	row := EditorRow{
 		chars:  s,
@@ -12,6 +14,12 @@ func (e *EditorConfig) editorAppendRow(s string) {
 
 func (e *EditorConfig) editorUpdateRow(row *EditorRow) {
 	for j := 0; j < len(row.chars); j++ {
-		row.render = append(row.render, row.chars[j])
+		if row.chars[j] == '\t' {
+			for range utils.KILO_TAB_STOP {
+				row.render = append(row.render, ' ')
+			}
+		} else {
+			row.render = append(row.render, row.chars[j])
+		}
 	}
 }

@@ -50,8 +50,6 @@ func (e *EditorConfig) editorMoveCursor(key int) {
 			e.cy--
 		}
 	case utils.ARROW_RIGHT:
-		if e.cx != e.screencols-1 {
-			e.cx++
-		}
+		e.cx++
 	}
 }

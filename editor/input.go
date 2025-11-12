@@ -43,8 +43,11 @@ func (e *EditorConfig) editorMoveCursor(key int) {
 
 	switch key {
 	case utils.ARROW_LEFT:
-		if e.cx > 0 {
+		if e.cx != 0 {
 			e.cx--
+		} else if e.cy > 0 {
+			e.cy--
+			e.cx = len(e.rows[e.cy].chars)
 		}
 	case utils.ARROW_DOWN:
 		if e.cy < e.numrows {

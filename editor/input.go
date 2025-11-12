@@ -59,4 +59,13 @@ func (e *EditorConfig) editorMoveCursor(key int) {
 			e.cx++
 		}
 	}
+
+	row = nil
+	if e.cy < e.numrows {
+		row = &e.rows[e.cy]
+	}
+
+	if row != nil && e.cx > len(row.chars) {
+		e.cx = len(row.chars)
+	}
 }

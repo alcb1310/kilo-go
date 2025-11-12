@@ -60,6 +60,9 @@ func (e *EditorConfig) editorMoveCursor(key int) {
 	case utils.ARROW_RIGHT:
 		if row != nil && e.cx < len(row.chars) {
 			e.cx++
+		} else if row != nil && e.cx == len(row.chars) {
+			e.cy++
+			e.cx = 0
 		}
 	}
 

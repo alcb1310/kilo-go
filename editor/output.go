@@ -46,9 +46,9 @@ func (e *EditorConfig) editorDrawRows(abuf *ab.AppendBuffer) {
 				fmt.Fprintf(abuf, "~")
 			}
 		} else {
-			chars := e.rows[filerow].chars
+			chars := e.rows[filerow].render
 			if len(chars) < e.colloffset {
-				chars = ""
+				chars = make([]byte, 0)
 			} else {
 				chars = chars[e.colloffset:]
 			}

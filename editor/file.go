@@ -20,9 +20,7 @@ func (e *EditorConfig) editorOpen(filename string) {
 	scanner := bufio.NewScanner(file)
 
 	for scanner.Scan() {
-		row := EditorRow{chars: scanner.Text()}
-		e.rows = append(e.rows, row)
-		e.numrows++
+		e.editorAppendRow(scanner.Text())
 	}
 
 	if err := scanner.Err(); err != nil {

@@ -8,7 +8,8 @@ import (
 )
 
 type EditorRow struct {
-	chars string
+	chars  string
+	render []byte
 }
 
 type EditorConfig struct {

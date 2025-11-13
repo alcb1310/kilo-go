@@ -17,14 +17,17 @@ func (e *EditorConfig) editorProcessKeypress() {
 		utils.SafeExit(e.restoreFunc, nil)
 	case utils.ARROW_DOWN, utils.ARROW_LEFT, utils.ARROW_RIGHT, utils.ARROW_UP:
 		e.editorMoveCursor(b)
-	case utils.PAGE_DOWN, utils.PAGE_UP:
+	case utils.PAGE_DOWN:
+		e.cy = min(e.rowoffset+e.screenrows+1, e.numrows)
 		times := e.screenrows
 		for range times {
-			if b == utils.PAGE_DOWN {
-				e.editorMoveCursor(utils.ARROW_DOWN)
-			} else {
-				e.editorMoveCursor(utils.ARROW_UP)
-			}
+			e.editorMoveCursor(utils.ARROW_DOWN)
+		}
+	case utils.PAGE_UP:
+		e.cy = e.rowoffset
+		times := e.screenrows
+		for range times {
+			e.editorMoveCursor(utils.ARROW_UP)
 		}
 	case utils.DEL_KEY:
 		slog.Info("DEL_KEY")

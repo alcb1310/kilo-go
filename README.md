@@ -29,6 +29,7 @@ The process of creating this project is being uploaded to [Dev.to](https://dev.t
 - [Raw Mode](https://dev.to/alcb1310/create-a-text-editor-with-go-enter-raw-mode-5g2n)
 - [Welcome Screen](https://dev.to/alcb1310/create-a-text-editor-with-go-welcome-screen-4hkm)
 - [Moving the Cursor](https://dev.to/alcb1310/create-a-text-editor-in-go-moving-the-cursor-2bnk)
+- [Text Viewer](https://dev.to/alcb1310/create-a-text-editor-in-go-text-viewer-4akp)
 
 ## License
 

@@ -34,7 +34,7 @@ func NewEditor(f func()) *EditorConfig {
 	return &EditorConfig{
 		restoreFunc: f,
 		reader:      bufio.NewReader(os.Stdin),
-		screenrows:  rows,
+		screenrows:  rows - 1,
 		screencols:  cols,
 		cx:          0,
 		cy:          0,

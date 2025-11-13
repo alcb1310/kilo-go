@@ -16,7 +16,7 @@ func (e *EditorConfig) editorRefreshScreen() {
 	fmt.Fprintf(abuf, "%c[H", utils.ESC)
 
 	e.editorDrawRows(abuf)
-	fmt.Fprintf(abuf, "%c[%d;%dH", utils.ESC, (e.cy-e.rowoffset)+1, (e.cx-e.colloffset)+1)
+	fmt.Fprintf(abuf, "%c[%d;%dH", utils.ESC, (e.cy-e.rowoffset)+1, (e.rx-e.colloffset)+1)
 	fmt.Fprintf(abuf, "%c[?25h", utils.ESC)
 
 	fmt.Fprintf(os.Stdout, "%s", abuf.Bytes())
@@ -66,6 +66,11 @@ func (e *EditorConfig) editorDrawRows(abuf *ab.AppendBuffer) {
 }
 
 func (e *EditorConfig) editorScroll() {
+	e.rx = 0
+	if e.cy < e.numrows {
+		e.rx = editorRowCxToRx(&e.rows[e.cy], e.cx)
+	}
+
 	if e.cy < e.rowoffset {
 		e.rowoffset = e.cy
 	}
@@ -73,10 +78,10 @@ func (e *EditorConfig) editorScroll() {
 		e.rowoffset = e.cy - e.screenrows + 1
 	}
 
-	if e.cx < e.colloffset {
-		e.colloffset = e.cx
+	if e.rx < e.colloffset {
+		e.colloffset = e.rx
 	}
-	if e.cx >= e.colloffset+e.screencols {
-		e.colloffset = e.cx - e.screencols + 1
+	if e.rx >= e.colloffset+e.screencols {
+		e.colloffset = e.rx - e.screencols + 1
 	}
 }

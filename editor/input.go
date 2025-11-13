@@ -34,7 +34,9 @@ func (e *EditorConfig) editorProcessKeypress() {
 	case utils.HOME_KEY:
 		e.cx = 0
 	case utils.END_KEY:
-		e.cx = e.screencols - 1
+		if e.cy < e.numrows {
+			e.cx = len(e.rows[e.cy].chars)
+		}
 	}
 }
 

@@ -23,3 +23,15 @@ func (e *EditorConfig) editorUpdateRow(row *EditorRow) {
 		}
 	}
 }
+
+func editorRowCxToRx(row *EditorRow, cx int) int {
+	rx := 0
+	for j := range cx {
+		if row.chars[j] == '\t' {
+			rx += utils.KILO_TAB_STOP
+		} else {
+			rx++
+		}
+	}
+	return rx
+}

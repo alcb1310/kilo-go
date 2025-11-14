@@ -17,6 +17,7 @@ func (e *EditorConfig) editorRefreshScreen() {
 
 	e.editorDrawRows(abuf)
 	e.editorDrawStatusBar(abuf)
+	e.editorDrawMessageBar(abuf)
 
 	fmt.Fprintf(abuf, "%c[%d;%dH", utils.ESC, (e.cy-e.rowoffset)+1, (e.rx-e.colloffset)+1)
 	fmt.Fprintf(abuf, "%c[?25h", utils.ESC)
@@ -106,4 +107,14 @@ func (e *EditorConfig) editorDrawStatusBar(abuf *ab.AppendBuffer) {
 	}
 
 	fmt.Fprintf(abuf, "%c[m", utils.ESC)
+	fmt.Fprintf(abuf, "\r\n")
+}
+
+func (e *EditorConfig) editorSetStatusMessage(message string) {
+	e.statusMessage = message
+}
+
+func (e *EditorConfig) editorDrawMessageBar(abuf *ab.AppendBuffer) {
+	fmt.Fprintf(abuf, "%c[K", utils.ESC)
+	fmt.Fprintf(abuf, " %s", e.statusMessage)
 }

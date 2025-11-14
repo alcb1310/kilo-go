@@ -13,17 +13,18 @@ type EditorRow struct {
 }
 
 type EditorConfig struct {
-	restoreFunc func()
-	reader      *bufio.Reader
-	screenrows  int
-	screencols  int
-	cx, cy      int
-	rx          int
-	numrows     int
-	rowoffset   int
-	colloffset  int
-	filename    string
-	rows        []EditorRow
+	restoreFunc   func()
+	reader        *bufio.Reader
+	screenrows    int
+	screencols    int
+	cx, cy        int
+	rx            int
+	numrows       int
+	rowoffset     int
+	colloffset    int
+	filename      string
+	statusMessage string
+	rows          []EditorRow
 }
 
 func NewEditor(f func()) *EditorConfig {
@@ -33,18 +34,19 @@ func NewEditor(f func()) *EditorConfig {
 	}
 
 	return &EditorConfig{
-		restoreFunc: f,
-		reader:      bufio.NewReader(os.Stdin),
-		screenrows:  rows - 1,
-		screencols:  cols,
-		cx:          0,
-		cy:          0,
-		numrows:     0,
-		rowoffset:   0,
-		colloffset:  0,
-		rx:          0,
-		filename:    "",
-		rows:        make([]EditorRow, 0),
+		restoreFunc:   f,
+		reader:        bufio.NewReader(os.Stdin),
+		screenrows:    rows - 2,
+		screencols:    cols,
+		cx:            0,
+		cy:            0,
+		numrows:       0,
+		rowoffset:     0,
+		colloffset:    0,
+		rx:            0,
+		filename:      "",
+		statusMessage: "",
+		rows:          make([]EditorRow, 0),
 	}
 }
 
@@ -54,6 +56,8 @@ func (e *EditorConfig) EditorLoop() {
 	if len(os.Args) > 1 {
 		e.editorOpen(os.Args[1])
 	}
+
+	e.editorSetStatusMessage("HELP: Ctrl-Q = quit")
 
 	for {
 		e.editorRefreshScreen()

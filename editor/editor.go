@@ -22,6 +22,7 @@ type EditorConfig struct {
 	numrows     int
 	rowoffset   int
 	colloffset  int
+	filename    string
 	rows        []EditorRow
 }
 
@@ -42,6 +43,7 @@ func NewEditor(f func()) *EditorConfig {
 		rowoffset:   0,
 		colloffset:  0,
 		rx:          0,
+		filename:    "",
 		rows:        make([]EditorRow, 0),
 	}
 }

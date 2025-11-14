@@ -37,6 +37,8 @@ func (e *EditorConfig) editorProcessKeypress() {
 		if e.cy < e.numrows {
 			e.cx = len(e.rows[e.cy].chars)
 		}
+	default:
+		e.editorInsertChar(byte(b))
 	}
 }
 

@@ -87,9 +87,15 @@ func (e *EditorConfig) editorScroll() {
 }
 
 func (e *EditorConfig) editorDrawStatusBar(abuf *ab.AppendBuffer) {
+	status := e.filename
+	if status == "" {
+		status = "[No Name]"
+	}
+
 	fmt.Fprintf(abuf, "%c[7m", utils.ESC)
 
-	for range e.screencols {
+	fmt.Fprintf(abuf, " %s", status)
+	for range e.screencols - (len(status) + 1) {
 		fmt.Fprintf(abuf, " ")
 	}
 

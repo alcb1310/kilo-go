@@ -16,6 +16,7 @@ func (e *EditorConfig) editorOpen(filename string) {
 		os.Exit(1)
 	}
 	defer file.Close()
+	e.filename = filename
 
 	scanner := bufio.NewScanner(file)
 

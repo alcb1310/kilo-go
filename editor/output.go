@@ -91,11 +91,17 @@ func (e *EditorConfig) editorDrawStatusBar(abuf *ab.AppendBuffer) {
 	if status == "" {
 		status = "[No Name]"
 	}
+	width := e.screencols - len(status) - 1
+
+	rstatus := fmt.Sprintf("column: %d row: %d/%d ", e.rx+1, e.cy+1, e.numrows)
 
 	fmt.Fprintf(abuf, "%c[7m", utils.ESC)
-
 	fmt.Fprintf(abuf, " %s", status)
-	for range e.screencols - (len(status) + 1) {
+	for k := range width {
+		if k+len(rstatus) == width {
+			fmt.Fprintf(abuf, "%s", rstatus)
+			break
+		}
 		fmt.Fprintf(abuf, " ")
 	}
 

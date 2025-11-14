@@ -1,7 +1,8 @@
 package utils
 
 const (
-	ESC = 0x1b
+	ESC   = 0x1b
+	ENTER = '\r'
 
 	KILO_VERSION = "0.0.1"
 
@@ -9,6 +10,7 @@ const (
 )
 
 const (
+	BACKSPACE  = 127
 	ARROW_LEFT = iota + 1000
 	ARROW_RIGHT
 	ARROW_UP

@@ -13,6 +13,8 @@ func (e *EditorConfig) editorProcessKeypress() {
 	}
 
 	switch b {
+	case utils.ENTER:
+		slog.Info("ENTER")
 	case utils.CtrlKey('q'):
 		utils.SafeExit(e.restoreFunc, nil)
 	case utils.ARROW_DOWN, utils.ARROW_LEFT, utils.ARROW_RIGHT, utils.ARROW_UP:
@@ -29,7 +31,7 @@ func (e *EditorConfig) editorProcessKeypress() {
 		for range times {
 			e.editorMoveCursor(utils.ARROW_UP)
 		}
-	case utils.DEL_KEY:
+	case utils.DEL_KEY, utils.BACKSPACE:
 		slog.Info("DEL_KEY")
 	case utils.HOME_KEY:
 		e.cx = 0
@@ -37,6 +39,9 @@ func (e *EditorConfig) editorProcessKeypress() {
 		if e.cy < e.numrows {
 			e.cx = len(e.rows[e.cy].chars)
 		}
+	case utils.ESC:
+		// for now we will ignore when the user press the escape key
+		break
 	default:
 		e.editorInsertChar(byte(b))
 	}

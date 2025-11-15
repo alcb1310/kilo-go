@@ -42,7 +42,10 @@ func (e *EditorConfig) editorProcessKeypress() {
 			e.editorMoveCursor(utils.ARROW_UP)
 		}
 	case utils.DEL_KEY, utils.BACKSPACE:
-		slog.Info("DEL_KEY")
+		if b == utils.DEL_KEY {
+			e.editorMoveCursor(utils.ARROW_RIGHT)
+		}
+		e.editorDeleteChar()
 	case utils.HOME_KEY:
 		e.cx = 0
 	case utils.END_KEY:

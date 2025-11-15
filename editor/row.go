@@ -11,6 +11,7 @@ func (e *EditorConfig) editorAppendRow(s string) {
 	e.editorUpdateRow(&row)
 	e.rows = append(e.rows, row)
 	e.numrows++
+	e.isDirty = true
 }
 
 func (e *EditorConfig) editorUpdateRow(row *EditorRow) {
@@ -41,4 +42,5 @@ func (e *EditorConfig) editorRowInsertChar(row *EditorRow, at int, c byte) {
 	row.render = make([]byte, len(row.chars)+1)
 	row.chars = row.chars[:at] + string(c) + row.chars[at:]
 	e.editorUpdateRow(row)
+	e.isDirty = true
 }

@@ -1,10 +1,13 @@
 package editor
 
 import (
+	"fmt"
 	"log/slog"
 
 	"github.com/alcb1310/kilo-go/utils"
 )
+
+var quit_times = utils.KILO_QUIT_TIMES
 
 func (e *EditorConfig) editorProcessKeypress() {
 	b, err := e.editorReadKey()
@@ -16,6 +19,11 @@ func (e *EditorConfig) editorProcessKeypress() {
 	case utils.ENTER:
 		slog.Info("ENTER")
 	case utils.CtrlKey('q'):
+		if e.isDirty && quit_times > 0 {
+			e.editorSetStatusMessage(fmt.Sprintf("WARNING! File has unsaved changes. Ctrl-Q %d more times to quit", quit_times))
+			quit_times--
+			return
+		}
 		utils.SafeExit(e.restoreFunc, nil)
 	case utils.CtrlKey('s'):
 		e.editorSave()
@@ -47,6 +55,8 @@ func (e *EditorConfig) editorProcessKeypress() {
 	default:
 		e.editorInsertChar(byte(b))
 	}
+
+	quit_times = utils.KILO_QUIT_TIMES
 }
 
 func (e *EditorConfig) editorMoveCursor(key int) {

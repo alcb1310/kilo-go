@@ -92,6 +92,11 @@ func (e *EditorConfig) editorDrawStatusBar(abuf *ab.AppendBuffer) {
 	if status == "" {
 		status = "[No Name]"
 	}
+
+	if e.isDirty {
+		status += " (modified)"
+	}
+
 	width := e.screencols - len(status) - 1
 
 	rstatus := fmt.Sprintf("column: %d row: %d/%d ", e.rx+1, e.cy+1, e.numrows)

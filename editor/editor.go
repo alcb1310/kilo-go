@@ -25,6 +25,7 @@ type EditorConfig struct {
 	filename      string
 	statusMessage string
 	rows          []EditorRow
+	isDirty       bool
 }
 
 func NewEditor(f func()) *EditorConfig {
@@ -47,6 +48,7 @@ func NewEditor(f func()) *EditorConfig {
 		filename:      "",
 		statusMessage: "",
 		rows:          make([]EditorRow, 0),
+		isDirty:       false,
 	}
 }
 

@@ -30,6 +30,7 @@ func (e *EditorConfig) editorOpen(filename string) {
 		utils.SafeExit(e.restoreFunc, err)
 		os.Exit(1)
 	}
+	e.isDirty = false
 }
 
 func (e *EditorConfig) editorSave() {
@@ -46,4 +47,5 @@ func (e *EditorConfig) editorSave() {
 	}
 
 	e.editorSetStatusMessage("File saved")
+	e.isDirty = false
 }

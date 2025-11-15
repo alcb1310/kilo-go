@@ -17,6 +17,8 @@ func (e *EditorConfig) editorProcessKeypress() {
 		slog.Info("ENTER")
 	case utils.CtrlKey('q'):
 		utils.SafeExit(e.restoreFunc, nil)
+	case utils.CtrlKey('s'):
+		e.editorSave()
 	case utils.ARROW_DOWN, utils.ARROW_LEFT, utils.ARROW_RIGHT, utils.ARROW_UP:
 		e.editorMoveCursor(b)
 	case utils.PAGE_DOWN:

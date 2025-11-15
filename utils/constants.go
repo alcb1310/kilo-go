@@ -6,7 +6,8 @@ const (
 
 	KILO_VERSION = "0.0.1"
 
-	KILO_TAB_STOP = 8
+	KILO_TAB_STOP   = 8
+	KILO_QUIT_TIMES = 3
 )
 
 const (

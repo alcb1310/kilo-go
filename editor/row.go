@@ -54,3 +54,19 @@ func (e *EditorConfig) editorRowDeleteChar(row *EditorRow, at int) {
 	e.editorUpdateRow(row)
 	e.isDirty = true
 }
+
+func (e *EditorConfig) editorDelRow(at int) {
+	if at < 0 || at >= len(e.rows) {
+		return
+	}
+	e.rows = append(e.rows[:at], e.rows[at+1:]...)
+	e.numrows--
+	e.isDirty = true
+}
+
+func (e *EditorConfig) editorRowAppendString(row *EditorRow, s string) {
+	row.chars += s
+	row.render = make([]byte, len(row.chars))
+	e.editorUpdateRow(row)
+	e.isDirty = true
+}

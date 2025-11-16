@@ -1,8 +1,8 @@
 package editor
 
 func (e *EditorConfig) editorInsertChar(c byte) {
-	if e.cy >= len(e.rows) {
-		e.editorAppendRow("")
+	if e.cy == len(e.rows) {
+		e.editorInsertRow(e.numrows, "")
 	}
 	e.editorRowInsertChar(&e.rows[e.cy], e.cx, c)
 	e.cx++
@@ -25,4 +25,22 @@ func (e *EditorConfig) editorDeleteChar() {
 		e.editorDelRow(e.cy)
 		e.cy--
 	}
+}
+
+func (e *EditorConfig) editorInsertNewline() {
+	if e.cy == len(e.rows) {
+		e.editorInsertRow(e.numrows, "")
+	} else {
+		row := &e.rows[e.cy]
+		e.editorInsertRow(e.cy+1, row.chars[e.cx:])
+		row.chars = row.chars[:e.cx]
+		row.render = make([]byte, len(row.chars))
+		e.editorUpdateRow(row)
+
+		row = &e.rows[e.cy+1]
+		row.render = make([]byte, len(row.chars))
+		e.editorUpdateRow(row)
+	}
+	e.cy++
+	e.cx = 0
 }

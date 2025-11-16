@@ -70,3 +70,9 @@ func (e *EditorConfig) editorRowAppendString(row *EditorRow, s string) {
 	e.editorUpdateRow(row)
 	e.isDirty = true
 }
+
+func (e *EditorConfig) editorInsertRow(at int, s string) {
+	e.rows = append(e.rows[:at], append([]EditorRow{{chars: s}}, e.rows[at:]...)...)
+	e.numrows++
+	e.isDirty = true
+}

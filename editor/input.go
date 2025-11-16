@@ -2,7 +2,6 @@ package editor
 
 import (
 	"fmt"
-	"log/slog"
 
 	"github.com/alcb1310/kilo-go/utils"
 )
@@ -17,7 +16,7 @@ func (e *EditorConfig) editorProcessKeypress() {
 
 	switch b {
 	case utils.ENTER:
-		slog.Info("ENTER")
+		e.editorInsertNewline()
 	case utils.CtrlKey('q'):
 		if e.isDirty && quit_times > 0 {
 			e.editorSetStatusMessage(fmt.Sprintf("WARNING! File has unsaved changes. Ctrl-Q %d more times to quit", quit_times))

@@ -59,7 +59,7 @@ func (e *EditorConfig) EditorLoop() {
 		e.editorOpen(os.Args[1])
 	}
 
-	e.editorSetStatusMessage("HELP: Ctrl-S = save | Ctrl-Q = quit")
+	e.editorSetStatusMessage(utils.KILO_DEFAULT_STATUS_MESSAGE)
 
 	for {
 		e.editorRefreshScreen()

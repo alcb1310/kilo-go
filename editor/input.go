@@ -2,6 +2,7 @@ package editor
 
 import (
 	"fmt"
+	"log/slog"
 
 	"github.com/alcb1310/kilo-go/utils"
 )
@@ -26,6 +27,9 @@ func (e *EditorConfig) editorProcessKeypress() {
 		utils.SafeExit(e.restoreFunc, nil)
 	case utils.CtrlKey('s'):
 		e.editorSave()
+	case utils.CtrlKey('c'):
+		term := e.editorPrompt(": ")
+		slog.Info("editorProcessKeypress, search term", "term", term)
 	case utils.ARROW_DOWN, utils.ARROW_LEFT, utils.ARROW_RIGHT, utils.ARROW_UP:
 		e.editorMoveCursor(b)
 	case utils.PAGE_DOWN:
@@ -99,5 +103,36 @@ func (e *EditorConfig) editorMoveCursor(key int) {
 
 	if row != nil && e.cx > len(row.chars) {
 		e.cx = len(row.chars)
+	}
+}
+
+func (e *EditorConfig) editorPrompt(prompt string) string {
+	var buf string
+	for {
+		e.editorSetStatusMessage(prompt + buf)
+		e.editorRefreshScreen()
+
+		b, err := e.editorReadKey()
+		if err != nil {
+			utils.SafeExit(e.restoreFunc, err)
+		}
+
+		switch b {
+		case utils.BACKSPACE, utils.DEL_KEY:
+			if len(buf) > 0 {
+				buf = buf[:len(buf)-1]
+			}
+		case utils.ESC:
+			slog.Info("editorPrompt, ESC")
+			e.editorSetStatusMessage(utils.KILO_DEFAULT_STATUS_MESSAGE)
+			return ""
+		case utils.ENTER:
+			e.editorSetStatusMessage(utils.KILO_DEFAULT_STATUS_MESSAGE)
+			return buf
+		default:
+			if !utils.IsCtrlKey(b) || b < 128 {
+				buf += string(rune(b))
+			}
+		}
 	}
 }

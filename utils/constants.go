@@ -6,8 +6,9 @@ const (
 
 	KILO_VERSION = "0.0.1"
 
-	KILO_TAB_STOP   = 8
-	KILO_QUIT_TIMES = 3
+	KILO_TAB_STOP               = 8
+	KILO_QUIT_TIMES             = 3
+	KILO_DEFAULT_STATUS_MESSAGE = "HELP: Ctrl-S = save | Ctrl-Q = quit"
 )
 
 const (

@@ -34,6 +34,14 @@ func (e *EditorConfig) editorOpen(filename string) {
 }
 
 func (e *EditorConfig) editorSave() {
+	if e.filename == "" {
+		e.filename = e.editorPrompt("Save as: ")
+		if e.filename == "" {
+			e.editorSetStatusMessage("Save aborted")
+			return
+		}
+	}
+
 	data := make([]byte, 0)
 	for _, row := range e.rows {
 		data = append(data, row.chars...)

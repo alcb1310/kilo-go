@@ -18,6 +18,7 @@ func (e *EditorConfig) editorProcessKeypress() {
 	switch b {
 	case utils.ENTER:
 		e.editorInsertNewline()
+
 	case utils.CtrlKey('q'):
 		if e.isDirty && quit_times > 0 {
 			e.editorSetStatusMessage(fmt.Sprintf("WARNING! File has unsaved changes. Ctrl-Q %d more times to quit", quit_times))
@@ -27,9 +28,10 @@ func (e *EditorConfig) editorProcessKeypress() {
 		utils.SafeExit(e.restoreFunc, nil)
 	case utils.CtrlKey('s'):
 		e.editorSave()
-	case utils.CtrlKey('c'):
-		term := e.editorPrompt(": ")
-		slog.Info("editorProcessKeypress, search term", "term", term)
+	case utils.CtrlKey('f'):
+		e.editorFind()
+		e.editorSetStatusMessage(utils.KILO_DEFAULT_STATUS_MESSAGE)
+
 	case utils.ARROW_DOWN, utils.ARROW_LEFT, utils.ARROW_RIGHT, utils.ARROW_UP:
 		e.editorMoveCursor(b)
 	case utils.PAGE_DOWN:
@@ -55,6 +57,7 @@ func (e *EditorConfig) editorProcessKeypress() {
 		if e.cy < e.numrows {
 			e.cx = len(e.rows[e.cy].chars)
 		}
+
 	case utils.ESC:
 		// for now we will ignore when the user press the escape key
 		break

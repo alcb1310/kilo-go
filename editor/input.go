@@ -128,17 +128,24 @@ func (e *EditorConfig) editorPrompt(prompt string, callback utils.Callback) stri
 		case utils.ESC:
 			slog.Info("editorPrompt, ESC")
 			e.editorSetStatusMessage(utils.KILO_DEFAULT_STATUS_MESSAGE)
+			if callback != nil {
+				callback(buf, b)
+			}
 			return ""
 		case utils.ENTER:
 			e.editorSetStatusMessage(utils.KILO_DEFAULT_STATUS_MESSAGE)
 			if callback != nil {
-				slog.Info("editorPrompt, calling callback")
+				callback(buf, b)
 			}
 			return buf
 		default:
 			if !utils.IsCtrlKey(b) || b < 128 {
 				buf += string(rune(b))
 			}
+		}
+
+		if callback != nil {
+			callback(buf, b)
 		}
 	}
 }

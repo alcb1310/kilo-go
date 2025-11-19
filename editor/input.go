@@ -109,7 +109,7 @@ func (e *EditorConfig) editorMoveCursor(key int) {
 	}
 }
 
-func (e *EditorConfig) editorPrompt(prompt string) string {
+func (e *EditorConfig) editorPrompt(prompt string, callback utils.Callback) string {
 	var buf string
 	for {
 		e.editorSetStatusMessage(prompt + buf)
@@ -131,6 +131,9 @@ func (e *EditorConfig) editorPrompt(prompt string) string {
 			return ""
 		case utils.ENTER:
 			e.editorSetStatusMessage(utils.KILO_DEFAULT_STATUS_MESSAGE)
+			if callback != nil {
+				slog.Info("editorPrompt, calling callback")
+			}
 			return buf
 		default:
 			if !utils.IsCtrlKey(b) || b < 128 {

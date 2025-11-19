@@ -35,7 +35,7 @@ func (e *EditorConfig) editorOpen(filename string) {
 
 func (e *EditorConfig) editorSave() {
 	if e.filename == "" {
-		e.filename = e.editorPrompt("Save as: ")
+		e.filename = e.editorPrompt("Save as: ", nil)
 		if e.filename == "" {
 			e.editorSetStatusMessage("Save aborted")
 			return

@@ -5,7 +5,7 @@ import (
 )
 
 func (e *EditorConfig) editorFind() {
-	query := e.editorPrompt("Search: ")
+	query := e.editorPrompt("Search: ", nil)
 	if query == "" {
 		return
 	}

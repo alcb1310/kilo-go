@@ -23,3 +23,5 @@ const (
 	PAGE_UP
 	PAGE_DOWN
 )
+
+type Callback func(query string, key int)

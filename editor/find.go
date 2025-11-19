@@ -2,11 +2,20 @@ package editor
 
 import (
 	"strings"
+
+	"github.com/alcb1310/kilo-go/utils"
 )
 
 func (e *EditorConfig) editorFind() {
-	query := e.editorPrompt("Search: ", nil)
+	query := e.editorPrompt("Search: ", e.editorFindCallback)
 	if query == "" {
+		return
+	}
+
+}
+
+func (e *EditorConfig) editorFindCallback(query string, key int) {
+	if key == utils.ENTER || key == utils.ESC {
 		return
 	}
 

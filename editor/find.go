@@ -7,9 +7,17 @@ import (
 )
 
 func (e *EditorConfig) editorFind() {
+	cx := e.cx
+	cy := e.cy
+	colloffset := e.colloffset
+	rowoffset := e.rowoffset
+
 	query := e.editorPrompt("Search: ", e.editorFindCallback)
 	if query == "" {
-		return
+		e.cx = cx
+		e.cy = cy
+		e.colloffset = colloffset
+		e.rowoffset = rowoffset
 	}
 
 }

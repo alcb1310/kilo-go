@@ -2,7 +2,6 @@ package editor
 
 import (
 	"fmt"
-	"log/slog"
 
 	"github.com/alcb1310/kilo-go/utils"
 )
@@ -126,7 +125,6 @@ func (e *EditorConfig) editorPrompt(prompt string, callback utils.Callback) stri
 				buf = buf[:len(buf)-1]
 			}
 		case utils.ESC:
-			slog.Info("editorPrompt, ESC")
 			e.editorSetStatusMessage(utils.KILO_DEFAULT_STATUS_MESSAGE)
 			if callback != nil {
 				callback(buf, b)
@@ -139,7 +137,7 @@ func (e *EditorConfig) editorPrompt(prompt string, callback utils.Callback) stri
 			}
 			return buf
 		default:
-			if !utils.IsCtrlKey(b) || b < 128 {
+			if !utils.IsCtrlKey(b) && b < 128 {
 				buf += string(rune(b))
 			}
 		}

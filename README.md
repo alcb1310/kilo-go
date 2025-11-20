@@ -32,6 +32,7 @@ The process of creating this project is being uploaded to [Dev.to](https://dev.t
 - [Text Viewer](https://dev.to/alcb1310/create-a-text-editor-in-go-text-viewer-4akp)
 - [Status Bar](https://dev.to/alcb1310/create-a-text-editor-in-go-status-bar-2047)
 - [Text Editor](https://dev.to/alcb1310/create-a-text-editor-in-go-a-text-editor-1m83)
+- [Search](https://dev.to/alcb1310/create-a-text-editor-in-go-search-13l7)
 
 ## License
 

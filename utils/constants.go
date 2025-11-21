@@ -24,4 +24,11 @@ const (
 	PAGE_DOWN
 )
 
+type EditorHighlight int
+
+const (
+	HL_NORMAL EditorHighlight = iota
+	HL_NUMBER
+)
+
 type Callback func(query string, key int)

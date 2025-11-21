@@ -10,6 +10,7 @@ import (
 type EditorRow struct {
 	chars  string
 	render []byte
+	hl     []utils.EditorHighlight
 }
 
 type EditorConfig struct {

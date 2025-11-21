@@ -58,14 +58,11 @@ func (e *EditorConfig) editorDrawRows(abuf *ab.AppendBuffer) {
 				chars = chars[e.colloffset:e.screencols]
 			}
 			for j := range chars {
-				if utils.IsDigit(chars[j]) {
-					fmt.Fprintf(abuf, "%c[38;2;255;0;0m", utils.ESC)
-					fmt.Fprintf(abuf, "%c", chars[j])
-					fmt.Fprintf(abuf, "%c[39m", utils.ESC)
-				} else {
-					fmt.Fprintf(abuf, "%c", chars[j])
-				}
+				r, g, b := editorSyntaxToColor(e.rows[filerow].hl[j])
+				fmt.Fprintf(abuf, "%c[38;2;%d;%d;%dm", utils.ESC, r, g, b)
+				fmt.Fprintf(abuf, "%c", chars[j])
 			}
+			fmt.Fprintf(abuf, "%c[39m", utils.ESC)
 
 		}
 

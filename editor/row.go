@@ -24,6 +24,8 @@ func (e *EditorConfig) editorUpdateRow(row *EditorRow) {
 			row.render = append(row.render, row.chars[j])
 		}
 	}
+
+	editorUpdateSyntax(row)
 }
 
 func editorRowCxToRx(row *EditorRow, cx int) int {
@@ -73,6 +75,8 @@ func (e *EditorConfig) editorRowAppendString(row *EditorRow, s string) {
 
 func (e *EditorConfig) editorInsertRow(at int, s string) {
 	e.rows = append(e.rows[:at], append([]EditorRow{{chars: s}}, e.rows[at:]...)...)
+
+	e.rows[at].hl = nil
 	e.numrows++
 	e.isDirty = true
 }

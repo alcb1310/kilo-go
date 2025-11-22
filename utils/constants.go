@@ -25,6 +25,10 @@ const (
 	PAGE_DOWN
 )
 
+const (
+	HL_HIGHLIGHT_NUMBER = (1 << 0)
+)
+
 type EditorHighlight int
 
 const (

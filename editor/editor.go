@@ -7,6 +7,17 @@ import (
 	"github.com/alcb1310/kilo-go/utils"
 )
 
+type EditorSyntax struct {
+	filetype  string
+	filematch []string
+	flags     uint
+}
+
+var GO_HL_EXTENSIONS = []string{".go"}
+var HLDB = []EditorSyntax{
+	{"go", GO_HL_EXTENSIONS, utils.HL_HIGHLIGHT_NUMBER},
+}
+
 type EditorRow struct {
 	chars  string
 	render []byte
@@ -27,6 +38,7 @@ type EditorConfig struct {
 	statusMessage string
 	rows          []EditorRow
 	isDirty       bool
+	syntax        *EditorSyntax
 }
 
 func NewEditor(f func()) *EditorConfig {
@@ -50,6 +62,7 @@ func NewEditor(f func()) *EditorConfig {
 		statusMessage: "",
 		rows:          make([]EditorRow, 0),
 		isDirty:       false,
+		syntax:        nil,
 	}
 }
 

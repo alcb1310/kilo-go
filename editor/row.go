@@ -5,7 +5,7 @@ import "github.com/alcb1310/kilo-go/utils"
 func (e *EditorConfig) editorAppendRow(s string) {
 	row := EditorRow{
 		chars:  s,
-		render: make([]byte, len(s)),
+		render: make([]byte, 0),
 	}
 	e.cx = 0
 	e.editorUpdateRow(&row)

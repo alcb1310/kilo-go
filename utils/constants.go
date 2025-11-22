@@ -29,6 +29,7 @@ type EditorHighlight int
 const (
 	HL_NORMAL EditorHighlight = iota
 	HL_NUMBER
+	HL_MATCH
 )
 
 type Callback func(query string, key int)

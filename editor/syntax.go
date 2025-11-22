@@ -19,7 +19,7 @@ func editorSyntaxToColor(hl utils.EditorHighlight) (r uint8, g uint8, b uint8) {
 	case utils.HL_NUMBER:
 		return 255, 0, 0
 	case utils.HL_MATCH:
-		return 0, 0, 255
+		return 51, 255, 0
 	default:
 		return 255, 255, 255
 	}

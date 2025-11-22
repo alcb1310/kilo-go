@@ -102,9 +102,14 @@ func (e *EditorConfig) editorDrawStatusBar(abuf *ab.AppendBuffer) {
 		status += " (modified)"
 	}
 
+	filetype := "[no ft]"
+	if e.syntax != nil {
+		filetype = "[" + e.syntax.filetype + "]"
+	}
+
 	width := e.screencols - len(status) - 1
 
-	rstatus := fmt.Sprintf("column: %d row: %d/%d ", e.rx+1, e.cy+1, e.numrows)
+	rstatus := fmt.Sprintf("%s | column: %d row: %d/%d ", filetype, e.rx+1, e.cy+1, e.numrows)
 
 	fmt.Fprintf(abuf, "%c[7m", utils.ESC)
 	fmt.Fprintf(abuf, " %s", status)

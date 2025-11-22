@@ -25,7 +25,7 @@ func (e *EditorConfig) editorUpdateRow(row *EditorRow) {
 		}
 	}
 
-	editorUpdateSyntax(row)
+	e.editorUpdateSyntax(row)
 }
 
 func editorRowCxToRx(row *EditorRow, cx int) int {

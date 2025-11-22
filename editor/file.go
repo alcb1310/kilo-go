@@ -18,6 +18,7 @@ func (e *EditorConfig) editorOpen(filename string) {
 	}
 	defer file.Close()
 	e.filename = filename
+	e.editorSelectSyntaxHighlight()
 
 	scanner := bufio.NewScanner(file)
 
@@ -40,6 +41,8 @@ func (e *EditorConfig) editorSave() {
 			e.editorSetStatusMessage("Save aborted")
 			return
 		}
+
+		e.editorSelectSyntaxHighlight()
 	}
 
 	data := make([]byte, 0)

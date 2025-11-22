@@ -14,6 +14,9 @@ var lastMatch int = -1
 // 1 for forward, -1 for backward
 var direction int = 1
 
+var saved_hl_line uint = 0
+var saved_hl []utils.EditorHighlight = nil
+
 func (e *EditorConfig) editorFind() {
 	cx := e.cx
 	cy := e.cy
@@ -31,6 +34,11 @@ func (e *EditorConfig) editorFind() {
 }
 
 func (e *EditorConfig) editorFindCallback(query string, key int) {
+	if saved_hl_line != 0 {
+		copy(e.rows[saved_hl_line].hl, saved_hl)
+		saved_hl = nil
+	}
+
 	if key == utils.ENTER || key == utils.ESC {
 		lastMatch = -1
 		direction = 1
@@ -62,6 +70,10 @@ func (e *EditorConfig) editorFindCallback(query string, key int) {
 
 		row := &e.rows[current]
 		if strings.Contains(row.chars, query) {
+			saved_hl_line = uint(current)
+			saved_hl = make([]utils.EditorHighlight, len(row.render))
+			copy(saved_hl, row.hl)
+
 			lastMatch = current
 			e.cy = current
 			e.cx = strings.Index(row.chars, query)

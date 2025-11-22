@@ -66,6 +66,12 @@ func (e *EditorConfig) editorFindCallback(query string, key int) {
 			e.cy = current
 			e.cx = strings.Index(row.chars, query)
 			e.rowoffset = e.numrows
+			rx := editorRowCxToRx(row, e.cx)
+			j := rx
+			for i := 0; i < len(query); i++ {
+				row.hl[j] = utils.HL_MATCH
+				j++
+			}
 			return
 		}
 	}

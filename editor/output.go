@@ -48,19 +48,19 @@ func (e *EditorConfig) editorDrawRows(abuf *ab.AppendBuffer) {
 				fmt.Fprintf(abuf, "~")
 			}
 		} else {
-			chars := e.rows[filerow].render
-			if len(chars) < e.colloffset {
-				chars = make([]byte, 0)
+			render := e.rows[filerow].render
+			if len(render) < e.colloffset {
+				render = make([]byte, 0)
 			} else {
-				chars = chars[e.colloffset:]
+				render = render[e.colloffset:]
 			}
-			if len(chars) > e.screencols {
-				chars = chars[e.colloffset:e.screencols]
+			if len(render) > e.screencols {
+				render = render[e.colloffset:e.screencols]
 			}
-			for j := range chars {
+			for j := range render {
 				r, g, b := editorSyntaxToColor(e.rows[filerow].hl[j])
 				fmt.Fprintf(abuf, "%c[38;2;%d;%d;%dm", utils.ESC, r, g, b)
-				fmt.Fprintf(abuf, "%c", chars[j])
+				fmt.Fprintf(abuf, "%c", render[j])
 			}
 			fmt.Fprintf(abuf, "%c[39m", utils.ESC)
 

@@ -34,6 +34,17 @@ The process of creating this project is being uploaded to [Dev.to](https://dev.t
 - [Text Editor](https://dev.to/alcb1310/create-a-text-editor-in-go-a-text-editor-1m83)
 - [Search](https://dev.to/alcb1310/create-a-text-editor-in-go-search-13l7)
 
+## Deguging
+
+To compile in debug mode:
+
+```bash
+sudo sysctl -w kernel.yama.ptrace_scope=0
+go build -gcflags="-N -l" -o kilo
+```
+
+After it is built you run the program and then you can debug it with a debuger
+
 ## License
 
 This project is distributed under the [GNU GPL V3 license](https://github.com/alcb1310/kilo-go/blob/main/LICENSE).

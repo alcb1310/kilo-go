@@ -3,12 +3,30 @@ package editor
 import "github.com/alcb1310/kilo-go/utils"
 
 func editorUpdateSyntax(row *EditorRow) {
+	prevSep := true
 	row.hl = make([]utils.EditorHighlight, len(row.render))
 
-	for i := range len(row.render) {
-		if utils.IsDigit(row.render[i]) {
-			row.hl[i] = utils.HL_NUMBER
+	i := 0
+	for i < len(row.render) {
+		c := row.render[i]
+		var prevHL utils.EditorHighlight
+		if i > 0 {
+			prevHL = row.hl[i-1]
+		} else {
+			prevHL = utils.HL_NORMAL
 		}
+
+		if utils.IsDigit(c) &&
+			(prevSep || prevHL == utils.HL_NUMBER) ||
+			(c == utils.KILO_DECIMAL_SEPARATOR && prevHL == utils.HL_NUMBER) {
+			row.hl[i] = utils.HL_NUMBER
+			i++
+			prevSep = false
+			continue
+		}
+
+		prevSep = utils.IsSeparator(c)
+		i++
 	}
 }
 

@@ -7,12 +7,13 @@ import (
 )
 
 func (e *EditorConfig) editorUpdateSyntax(row *EditorRow) {
-	prevSep := true
 	row.hl = make([]utils.EditorHighlight, len(row.render))
-
 	if e.syntax == nil {
 		return
 	}
+
+	prevSep := true
+	var inString byte = 0
 
 	i := 0
 	for i < len(row.render) {
@@ -22,6 +23,31 @@ func (e *EditorConfig) editorUpdateSyntax(row *EditorRow) {
 			prevHL = row.hl[i-1]
 		} else {
 			prevHL = utils.HL_NORMAL
+		}
+
+		if e.syntax.flags&utils.HL_HIGHLIGHT_STRING == 2 {
+			if inString != 0 {
+				row.hl[i] = utils.HL_STRING
+				if c == '\\' && i+1 < len(row.render) {
+					i++
+					row.hl[i] = utils.HL_STRING
+					i++
+					continue
+				}
+				if c == inString {
+					inString = 0
+				}
+				i++
+				prevSep = true
+				continue
+			} else {
+				if c == '"' || c == '\'' {
+					inString = c
+					row.hl[i] = utils.HL_STRING
+					i++
+					continue
+				}
+			}
 		}
 
 		if e.syntax.flags&utils.HL_HIGHLIGHT_NUMBER == 1 {
@@ -41,15 +67,27 @@ func (e *EditorConfig) editorUpdateSyntax(row *EditorRow) {
 }
 
 func editorSyntaxToColor(hl utils.EditorHighlight) (r uint8, g uint8, b uint8) {
+	r = 255
+	g = 255
+	b = 255
+
 	switch hl {
 	case utils.HL_NORMAL:
-		return 255, 255, 255
+		return
 	case utils.HL_NUMBER:
-		return 255, 0, 0
+		g = 0
+		b = 0
+		return
 	case utils.HL_MATCH:
-		return 51, 255, 0
+		r = 51
+		b = 0
+		return
+	case utils.HL_STRING:
+		g = 39
+		b = 155
+		return
 	default:
-		return 255, 255, 255
+		return
 	}
 }
 

@@ -14,6 +14,7 @@ func (e *EditorConfig) editorUpdateSyntax(row *EditorRow) {
 
 	prevSep := true
 	var inString byte = 0
+	scs := e.syntax.singleLineComment
 
 	i := 0
 	for i < len(row.render) {
@@ -23,6 +24,15 @@ func (e *EditorConfig) editorUpdateSyntax(row *EditorRow) {
 			prevHL = row.hl[i-1]
 		} else {
 			prevHL = utils.HL_NORMAL
+		}
+
+		if len(scs) > 0 && inString == 0 {
+			if strings.HasPrefix(string(row.render[i:]), scs) {
+				for j := i; j < len(row.render); j++ {
+					row.hl[j] = utils.HL_COMMENT
+				}
+				break
+			}
 		}
 
 		if e.syntax.flags&utils.HL_HIGHLIGHT_STRING == 2 {
@@ -85,6 +95,9 @@ func editorSyntaxToColor(hl utils.EditorHighlight) (r uint8, g uint8, b uint8) {
 	case utils.HL_STRING:
 		g = 39
 		b = 155
+		return
+	case utils.HL_COMMENT:
+		r = 0
 		return
 	default:
 		return

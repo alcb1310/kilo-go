@@ -15,7 +15,11 @@ type EditorSyntax struct {
 
 var GO_HL_EXTENSIONS = []string{".go"}
 var HLDB = []EditorSyntax{
-	{"go", GO_HL_EXTENSIONS, utils.HL_HIGHLIGHT_NUMBER},
+	{
+		"go",
+		GO_HL_EXTENSIONS,
+		utils.HL_HIGHLIGHT_NUMBER | utils.HL_HIGHLIGHT_STRING,
+	},
 }
 
 type EditorRow struct {

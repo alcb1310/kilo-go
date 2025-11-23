@@ -27,12 +27,14 @@ const (
 
 const (
 	HL_HIGHLIGHT_NUMBER = (1 << 0)
+	HL_HIGHLIGHT_STRING = (1 << 1)
 )
 
 type EditorHighlight int
 
 const (
 	HL_NORMAL EditorHighlight = iota
+	HL_STRING
 	HL_NUMBER
 	HL_MATCH
 )

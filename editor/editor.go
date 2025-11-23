@@ -8,17 +8,19 @@ import (
 )
 
 type EditorSyntax struct {
-	filetype  string
-	filematch []string
-	flags     uint
+	filetype          string
+	filematch         []string
+	flags             uint
+	singleLineComment string
 }
 
 var GO_HL_EXTENSIONS = []string{".go"}
 var HLDB = []EditorSyntax{
 	{
-		"go",
-		GO_HL_EXTENSIONS,
-		utils.HL_HIGHLIGHT_NUMBER | utils.HL_HIGHLIGHT_STRING,
+		filetype:          "go",
+		filematch:         GO_HL_EXTENSIONS,
+		flags:             utils.HL_HIGHLIGHT_NUMBER | utils.HL_HIGHLIGHT_STRING,
+		singleLineComment: "//",
 	},
 }
 

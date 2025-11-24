@@ -35,6 +35,8 @@ type EditorHighlight int
 const (
 	HL_NORMAL EditorHighlight = iota
 	HL_COMMENT
+	HL_KEYWORD
+	HL_TYPE_KEYWORD
 	HL_STRING
 	HL_NUMBER
 	HL_MATCH

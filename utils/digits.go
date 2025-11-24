@@ -7,7 +7,7 @@ func IsDigit(c byte) bool {
 }
 
 func IsSeparator(c byte) bool {
-	return IsSpace(c) || strings.ContainsRune(",.()+-/*=~%<>[];{}", rune(c))
+	return IsSpace(c) || strings.ContainsRune(":,.()+-/*=~%<>[];{}", rune(c)) || rune(c) == 0
 }
 
 func IsSpace(c byte) bool {

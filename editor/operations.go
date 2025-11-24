@@ -34,11 +34,11 @@ func (e *EditorConfig) editorInsertNewline() {
 		row := &e.rows[e.cy]
 		e.editorInsertRow(e.cy+1, row.chars[e.cx:])
 		row.chars = row.chars[:e.cx]
-		row.render = make([]byte, len(row.chars))
+		row.render = make([]byte, 0)
 		e.editorUpdateRow(row)
 
 		row = &e.rows[e.cy+1]
-		row.render = make([]byte, len(row.chars))
+		row.render = make([]byte, 0)
 		e.editorUpdateRow(row)
 	}
 	e.cy++

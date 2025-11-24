@@ -15,6 +15,8 @@ func (e *EditorConfig) editorUpdateSyntax(row *EditorRow) {
 	prevSep := true
 	var inString byte = 0
 	scs := e.syntax.singleLineComment
+	keywords := e.syntax.keywords
+	types := e.syntax.types
 
 	i := 0
 	for i < len(row.render) {
@@ -71,6 +73,48 @@ func (e *EditorConfig) editorUpdateSyntax(row *EditorRow) {
 			}
 		}
 
+		if prevSep {
+			j := 0
+			for j = 0; j < len(keywords); j++ {
+				key := keywords[j]
+				if strings.HasPrefix(string(row.render[i:]), key) &&
+					((i+len(key) < len(row.render) &&
+						utils.IsSeparator(row.render[i+len(key)])) ||
+						i+len(key) == len(row.render)) {
+					for k := range key {
+						row.hl[i+k] = utils.HL_KEYWORD
+					}
+					i += len(key) - 1
+					break
+				}
+			}
+
+			if j < len(keywords) {
+				prevSep = false
+				continue
+			}
+
+			m := 0
+			for m = 0; m < len(types); m++ {
+				key := types[m]
+				if strings.HasPrefix(string(row.render[i:]), key) &&
+					((i+len(key) < len(row.render) &&
+						utils.IsSeparator(row.render[i+len(key)])) ||
+						i+len(key) == len(row.render)) {
+					for k := range key {
+						row.hl[i+k] = utils.HL_TYPE_KEYWORD
+					}
+					i += len(key) - 1
+					break
+				}
+			}
+
+			if m < len(types) {
+				prevSep = false
+				continue
+			}
+		}
+
 		prevSep = utils.IsSeparator(c)
 		i++
 	}
@@ -82,26 +126,26 @@ func editorSyntaxToColor(hl utils.EditorHighlight) (r uint8, g uint8, b uint8) {
 	b = 255
 
 	switch hl {
-	case utils.HL_NORMAL:
-		return
 	case utils.HL_NUMBER:
 		g = 0
 		b = 0
-		return
 	case utils.HL_MATCH:
 		r = 51
 		b = 0
-		return
 	case utils.HL_STRING:
 		g = 39
 		b = 155
-		return
 	case utils.HL_COMMENT:
 		r = 0
-		return
-	default:
-		return
+	case utils.HL_KEYWORD:
+		g = 239
+		b = 0
+	case utils.HL_TYPE_KEYWORD:
+		g = 55
+		b = 239
+		r = 126
 	}
+	return
 }
 
 func (e *EditorConfig) editorSelectSyntaxHighlight() {

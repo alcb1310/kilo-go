@@ -41,7 +41,7 @@ func editorRowCxToRx(row *EditorRow, cx int) int {
 }
 
 func (e *EditorConfig) editorRowInsertChar(row *EditorRow, at int, c byte) {
-	row.render = make([]byte, len(row.chars)+1)
+	row.render = make([]byte, 0)
 	row.chars = row.chars[:at] + string(c) + row.chars[at:]
 	e.editorUpdateRow(row)
 	e.isDirty = true
@@ -51,7 +51,7 @@ func (e *EditorConfig) editorRowDeleteChar(row *EditorRow, at int) {
 	if at < 0 || at >= len(row.chars) {
 		return
 	}
-	row.render = make([]byte, len(row.chars)-1)
+	row.render = make([]byte, 0)
 	row.chars = row.chars[:at] + row.chars[at+1:]
 	e.editorUpdateRow(row)
 	e.isDirty = true
@@ -68,7 +68,7 @@ func (e *EditorConfig) editorDelRow(at int) {
 
 func (e *EditorConfig) editorRowAppendString(row *EditorRow, s string) {
 	row.chars += s
-	row.render = make([]byte, len(row.chars))
+	row.render = make([]byte, 0)
 	e.editorUpdateRow(row)
 	e.isDirty = true
 }

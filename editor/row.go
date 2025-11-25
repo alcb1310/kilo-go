@@ -1,6 +1,8 @@
 package editor
 
-import "github.com/alcb1310/kilo-go/utils"
+import (
+	"github.com/alcb1310/kilo-go/utils"
+)
 
 func (e *EditorConfig) editorAppendRow(s string) {
 	row := EditorRow{
@@ -24,6 +26,7 @@ func (e *EditorConfig) editorUpdateRow(row *EditorRow) {
 			row.render = append(row.render, row.chars[j])
 		}
 	}
+	row.idx = e.numrows
 
 	e.editorUpdateSyntax(row)
 }
@@ -53,6 +56,10 @@ func (e *EditorConfig) editorRowDeleteChar(row *EditorRow, at int) {
 	}
 	row.render = make([]byte, 0)
 	row.chars = row.chars[:at] + row.chars[at+1:]
+
+	for j := at; j <= e.numrows-1; j++ {
+		e.rows[j].idx--
+	}
 	e.editorUpdateRow(row)
 	e.isDirty = true
 }
@@ -75,8 +82,14 @@ func (e *EditorConfig) editorRowAppendString(row *EditorRow, s string) {
 
 func (e *EditorConfig) editorInsertRow(at int, s string) {
 	e.rows = append(e.rows[:at], append([]EditorRow{{chars: s}}, e.rows[at:]...)...)
+	for j := at + 1; j <= e.numrows; j++ {
+		e.rows[j].idx++
+	}
+
+	e.rows[at].idx = at
 
 	e.rows[at].hl = nil
+	e.rows[at].hlOpenComment = false
 	e.numrows++
 	e.isDirty = true
 }

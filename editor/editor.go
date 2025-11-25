@@ -8,12 +8,14 @@ import (
 )
 
 type EditorSyntax struct {
-	filetype          string
-	filematch         []string
-	flags             uint
-	singleLineComment string
-	keywords          []string
-	types             []string
+	filetype              string
+	filematch             []string
+	flags                 uint
+	singleLineComment     string
+	multiLineCommentStart string
+	multiLineCommentEnd   string
+	keywords              []string
+	types                 []string
 }
 
 var GO_HL_EXTENSIONS = []string{".go"}
@@ -60,19 +62,23 @@ var GO_HL_TYPES = []string{
 
 var HLDB = []EditorSyntax{
 	{
-		filetype:          "go",
-		filematch:         GO_HL_EXTENSIONS,
-		flags:             utils.HL_HIGHLIGHT_NUMBER | utils.HL_HIGHLIGHT_STRING,
-		singleLineComment: "//",
-		keywords:          GO_HL_KEYWORDS,
-		types:             GO_HL_TYPES,
+		filetype:              "go",
+		filematch:             GO_HL_EXTENSIONS,
+		flags:                 utils.HL_HIGHLIGHT_NUMBER | utils.HL_HIGHLIGHT_STRING,
+		singleLineComment:     "//",
+		multiLineCommentStart: "/*",
+		multiLineCommentEnd:   "*/",
+		keywords:              GO_HL_KEYWORDS,
+		types:                 GO_HL_TYPES,
 	},
 }
 
 type EditorRow struct {
-	chars  string
-	render []byte
-	hl     []utils.EditorHighlight
+	idx           int
+	hlOpenComment bool
+	chars         string
+	render        []byte
+	hl            []utils.EditorHighlight
 }
 
 type EditorConfig struct {

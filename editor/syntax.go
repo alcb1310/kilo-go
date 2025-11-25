@@ -13,10 +13,17 @@ func (e *EditorConfig) editorUpdateSyntax(row *EditorRow) {
 	}
 
 	prevSep := true
+	inComment := row.idx > 0 && e.rows[row.idx-1].hlOpenComment
 	var inString byte = 0
 	scs := e.syntax.singleLineComment
+	mcs := e.syntax.multiLineCommentStart
+	mce := e.syntax.multiLineCommentEnd
 	keywords := e.syntax.keywords
 	types := e.syntax.types
+
+	scsLen := len(scs)
+	mcsLen := len(mcs)
+	mceLen := len(mce)
 
 	i := 0
 	for i < len(row.render) {
@@ -28,12 +35,37 @@ func (e *EditorConfig) editorUpdateSyntax(row *EditorRow) {
 			prevHL = utils.HL_NORMAL
 		}
 
-		if len(scs) > 0 && inString == 0 {
+		if scsLen > 0 && inString == 0 && !inComment {
 			if strings.HasPrefix(string(row.render[i:]), scs) {
 				for j := i; j < len(row.render); j++ {
 					row.hl[j] = utils.HL_COMMENT
 				}
 				break
+			}
+		}
+
+		if mcsLen > 0 && mceLen > 0 && inString == 0 {
+			if inComment {
+				row.hl[i] = utils.HL_COMMENT
+				if strings.HasPrefix(string(row.render[i:]), mce) {
+					for j := i; j < mceLen; j++ {
+						row.hl[j] = utils.HL_COMMENT
+					}
+					i += mceLen
+					inComment = false
+					prevSep = true
+					continue
+				} else {
+					i++
+					continue
+				}
+			} else if strings.HasPrefix(string(row.render[i:]), mcs) {
+				for j := i; j < mcsLen; j++ {
+					row.hl[j] = utils.HL_COMMENT
+				}
+				i += mcsLen
+				inComment = true
+				continue
 			}
 		}
 
@@ -118,6 +150,13 @@ func (e *EditorConfig) editorUpdateSyntax(row *EditorRow) {
 		prevSep = utils.IsSeparator(c)
 		i++
 	}
+
+	changed := row.hlOpenComment != inComment
+	row.hlOpenComment = inComment
+
+	if changed && row.idx+1 < e.numrows {
+		e.editorUpdateSyntax(&e.rows[row.idx+1])
+	}
 }
 
 func editorSyntaxToColor(hl utils.EditorHighlight) (r uint8, g uint8, b uint8) {
@@ -135,7 +174,7 @@ func editorSyntaxToColor(hl utils.EditorHighlight) (r uint8, g uint8, b uint8) {
 	case utils.HL_STRING:
 		g = 39
 		b = 155
-	case utils.HL_COMMENT:
+	case utils.HL_COMMENT, utils.HL_MLCOMMENT:
 		r = 0
 	case utils.HL_KEYWORD:
 		g = 239

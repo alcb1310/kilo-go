@@ -26,8 +26,7 @@ func init() {
 	loggerHandler := slog.NewTextHandler(f, handlerOptions)
 	slog.SetDefault(slog.New(loggerHandler))
 
-	u := linux.NewUnixRawMode()
-	restoreFunc, err = u.EnableRawMode()
+	restoreFunc, err = linux.EnableRawMode()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error: %s\r\n", err)
 		os.Exit(1)

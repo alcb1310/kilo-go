@@ -99,7 +99,7 @@ type EditorConfig struct {
 }
 
 func NewEditor(f func()) *EditorConfig {
-	rows, cols, err := utils.GetWindowSize()
+	cols, rows, err := utils.GetWindowSize()
 	if err != nil {
 		utils.SafeExit(f, err)
 	}

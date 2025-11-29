@@ -31,6 +31,8 @@ func init() {
 		fmt.Fprintf(os.Stderr, "Error: %s\r\n", err)
 		os.Exit(1)
 	}
+
+	utils.LoadTOML()
 }
 
 func main() {

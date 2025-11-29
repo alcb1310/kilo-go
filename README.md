@@ -46,6 +46,10 @@ go build -gcflags="-N -l" -o kilo
 
 After it is built you run the program and then you can debug it with a debuger
 
+## Configuration
+
+Configuration instructions can be found in the [Configuration](https://github.com/alcb1310/kilo-go/blob/main/docs/config.md) section.
+
 ## License
 
 This project is distributed under the [GNU GPL V3 license](https://github.com/alcb1310/kilo-go/blob/main/LICENSE).

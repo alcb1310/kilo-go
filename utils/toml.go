@@ -47,5 +47,37 @@ func LoadTOML() error {
 		return err
 	}
 
+	if config.Settings.QuitTimes >= 0 {
+		KILO_QUIT_TIMES = config.Settings.QuitTimes
+	}
+	if config.Settings.TabStop >= 0 {
+		KILO_TAB_STOP = config.Settings.TabStop
+	}
+
+	var val [3]uint8
+	var ok bool
+
+	if val, ok = config.Theme["default"]; ok {
+		KILO_DEFAULT_COLOR = val
+	}
+	if val, ok = config.Theme["number"]; ok {
+		KILO_NUMBER_COLOR = val
+	}
+	if val, ok = config.Theme["match"]; ok {
+		KILO_MATCH_COLOR = val
+	}
+	if val, ok = config.Theme["string"]; ok {
+		KILO_STRING_COLOR = val
+	}
+	if val, ok = config.Theme["comment"]; ok {
+		KILO_COMMENT_COLOR = val
+	}
+	if val, ok = config.Theme["keyword"]; ok {
+		KILO_KEYWORD_COLOR = val
+	}
+	if val, ok = config.Theme["type"]; ok {
+		KILO_TYPE_COLOR = val
+	}
+
 	return nil
 }

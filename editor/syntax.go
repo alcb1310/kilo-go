@@ -160,29 +160,35 @@ func (e *EditorConfig) editorUpdateSyntax(row *EditorRow) {
 }
 
 func editorSyntaxToColor(hl utils.EditorHighlight) (r uint8, g uint8, b uint8) {
-	r = 255
-	g = 255
-	b = 255
-
 	switch hl {
 	case utils.HL_NUMBER:
-		g = 0
-		b = 0
+		r = utils.KILO_NUMBER_COLOR[0]
+		g = utils.KILO_NUMBER_COLOR[1]
+		b = utils.KILO_NUMBER_COLOR[2]
 	case utils.HL_MATCH:
-		r = 51
-		b = 0
+		r = utils.KILO_MATCH_COLOR[0]
+		g = utils.KILO_MATCH_COLOR[1]
+		b = utils.KILO_MATCH_COLOR[2]
 	case utils.HL_STRING:
-		g = 39
-		b = 155
+		r = utils.KILO_STRING_COLOR[0]
+		g = utils.KILO_STRING_COLOR[1]
+		b = utils.KILO_STRING_COLOR[2]
 	case utils.HL_COMMENT, utils.HL_MLCOMMENT:
-		r = 0
+		r = utils.KILO_COMMENT_COLOR[0]
+		g = utils.KILO_COMMENT_COLOR[1]
+		b = utils.KILO_COMMENT_COLOR[2]
 	case utils.HL_KEYWORD:
-		g = 239
-		b = 0
+		r = utils.KILO_KEYWORD_COLOR[0]
+		g = utils.KILO_KEYWORD_COLOR[1]
+		b = utils.KILO_KEYWORD_COLOR[2]
 	case utils.HL_TYPE_KEYWORD:
-		g = 55
-		b = 239
-		r = 126
+		r = utils.KILO_TYPE_COLOR[0]
+		g = utils.KILO_TYPE_COLOR[1]
+		b = utils.KILO_TYPE_COLOR[2]
+	default:
+		r = utils.KILO_DEFAULT_COLOR[0]
+		g = utils.KILO_DEFAULT_COLOR[1]
+		b = utils.KILO_DEFAULT_COLOR[2]
 	}
 	return
 }

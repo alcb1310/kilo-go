@@ -1,6 +1,11 @@
 # Configuring `Kilo` text editor
 
 The `Kilo` text editor will look for its configuration file inside the `XDG_CONFIG` directory, which is usually `$HOME/.config`.
+
+- On Unix systems, it returns `$XDG_CONFIG_HOME` as specified by https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html if non-empty, else `$HOME/.config`.
+- On Darwin (macOS), it returns `$HOME/Library/Application Support`.
+- On Windows, it returns `%AppData%`.
+
 Inside that directory it will look for a file named `kilo/config.toml`.
 
 The `config.toml` file is a [TOML](https://toml.io/) file that contains the configuration for `Kilo` text editor, and will have the following sections:

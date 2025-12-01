@@ -3,6 +3,7 @@ package editor
 import (
 	"strings"
 
+	"github.com/alcb1310/kilo-go/syntax"
 	"github.com/alcb1310/kilo-go/utils"
 )
 
@@ -15,11 +16,11 @@ func (e *EditorConfig) editorUpdateSyntax(row *EditorRow) {
 	prevSep := true
 	inComment := row.idx > 0 && e.rows[row.idx-1].hlOpenComment
 	var inString byte = 0
-	scs := e.syntax.singleLineComment
-	mcs := e.syntax.multiLineCommentStart
-	mce := e.syntax.multiLineCommentEnd
-	keywords := e.syntax.keywords
-	types := e.syntax.types
+	scs := e.syntax.SingleLineComment
+	mcs := e.syntax.MultiLineCommentStart
+	mce := e.syntax.MultiLineCommentEnd
+	keywords := e.syntax.Keywords
+	types := e.syntax.Types
 
 	scsLen := len(scs)
 	mcsLen := len(mcs)
@@ -69,7 +70,7 @@ func (e *EditorConfig) editorUpdateSyntax(row *EditorRow) {
 			}
 		}
 
-		if e.syntax.flags&utils.HL_HIGHLIGHT_STRING == 2 {
+		if e.syntax.Flags&utils.HL_HIGHLIGHT_STRING == 2 {
 			if inString != 0 {
 				row.hl[i] = utils.HL_STRING
 				if c == '\\' && i+1 < len(row.render) {
@@ -94,7 +95,7 @@ func (e *EditorConfig) editorUpdateSyntax(row *EditorRow) {
 			}
 		}
 
-		if e.syntax.flags&utils.HL_HIGHLIGHT_NUMBER == 1 {
+		if e.syntax.Flags&utils.HL_HIGHLIGHT_NUMBER == 1 {
 			if utils.IsDigit(c) &&
 				(prevSep || prevHL == utils.HL_NUMBER) ||
 				(c == utils.KILO_DECIMAL_SEPARATOR && prevHL == utils.HL_NUMBER) {
@@ -205,11 +206,11 @@ func (e *EditorConfig) editorSelectSyntaxHighlight() {
 	}
 	ext := e.filename[lastIndex:]
 
-	for i, s := range HLDB {
-		isExt := s.filematch[i][0] == '.'
+	for i, s := range syntax.HLDB {
+		isExt := s.Filematch[i][0] == '.'
 
-		if (isExt && ext == s.filematch[i]) ||
-			(!isExt && strings.Contains(ext, s.filematch[i])) {
+		if (isExt && ext == s.Filematch[i]) ||
+			(!isExt && strings.Contains(ext, s.Filematch[i])) {
 			e.syntax = &s
 
 			for _, row := range e.rows {

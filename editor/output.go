@@ -104,7 +104,7 @@ func (e *EditorConfig) editorDrawStatusBar(abuf *ab.AppendBuffer) {
 
 	filetype := "[no ft]"
 	if e.syntax != nil {
-		filetype = "[" + e.syntax.filetype + "]"
+		filetype = "[" + e.syntax.Filetype + "]"
 	}
 
 	width := e.screencols - len(status) - 1

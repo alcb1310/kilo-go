@@ -206,18 +206,19 @@ func (e *EditorConfig) editorSelectSyntaxHighlight() {
 	}
 	ext := e.filename[lastIndex:]
 
-	for i, s := range syntax.HLDB {
-		isExt := s.Filematch[i][0] == '.'
+	for _, s := range syntax.HLDB {
+		for j := range s.Filematch {
+			isExt := s.Filematch[j][0] == '.'
+			if (isExt && ext == s.Filematch[j]) ||
+				(!isExt && strings.Contains(ext, s.Filematch[j])) {
+				e.syntax = &s
 
-		if (isExt && ext == s.Filematch[i]) ||
-			(!isExt && strings.Contains(ext, s.Filematch[i])) {
-			e.syntax = &s
+				for _, row := range e.rows {
+					e.editorUpdateSyntax(&row)
+				}
 
-			for _, row := range e.rows {
-				e.editorUpdateSyntax(&row)
+				return
 			}
-
-			return
 		}
 	}
 }

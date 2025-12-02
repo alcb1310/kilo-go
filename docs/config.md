@@ -48,3 +48,7 @@ type=[12,239,55] # Default [12,239,55]
 ```
 
 Each color is a list of 3 numbers that represent the red, green and blue values of the color, with values that ranges from 0 to 255.
+
+## Syntax Highlighting
+
+Instructions in how to setup syntax highlighting can be found [here](/docs/syntax.md).

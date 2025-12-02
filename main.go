@@ -7,6 +7,7 @@ import (
 
 	"github.com/alcb1310/kilo-go/editor"
 	"github.com/alcb1310/kilo-go/linux"
+	"github.com/alcb1310/kilo-go/syntax"
 	"github.com/alcb1310/kilo-go/utils"
 )
 
@@ -33,6 +34,7 @@ func init() {
 	}
 
 	utils.LoadTOML()
+	syntax.LoadSyntax()
 }
 
 func main() {
